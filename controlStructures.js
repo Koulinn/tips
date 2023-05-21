@@ -28,13 +28,9 @@ const appointmentAction = {
   },
 }
 
-const hasStatus = (status) => Boolean(status)
+const supportedStatus = "booked-cancelled-rescheduled"
 
-const isStatus = (appointment, status) => {
-  const statusRegex = new RegExp(status, "i")
-
-  return Boolean(appointment.status.match(statusRegex))
-}
+const hasValidStatus = (status) => status && status?.includes(supportedStatus)
 
 const handleError = (err) => {
   // Handle error logic
@@ -42,7 +38,7 @@ const handleError = (err) => {
 
 const manageAppointments = (appointment) => {
   // 1-> Guard
-  if (!hasStatus(appointment.status)) {
+  if (!hasValidStatus(appointment.status)) {
     // 1.1 -> Error handling
     handleError(appointment)
   }
