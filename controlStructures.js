@@ -28,9 +28,9 @@ const appointmentAction = {
   },
 }
 
-const supportedStatus = "booked-cancelled-rescheduled"
+const supportedStatuses = "booked-cancelled-rescheduled"
 
-const hasValidStatus = (status) => status && status?.includes(supportedStatus)
+const hasValidStatus = (status) => status && status?.includes(supportedStatuses)
 
 const handleError = (err) => {
   // Handle error logic
@@ -43,7 +43,7 @@ const manageAppointments = (appointment) => {
     handleError(appointment)
   }
 
-  const appointmentStatus = appointment.status
+  const appointmentStatus = appointment.status.toLowerCase()
 
   appointmentAction[appointmentStatus](appointment)
 }
