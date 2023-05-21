@@ -1,41 +1,55 @@
-const appointmentAction = {
-    booked: (appointment) => {
-        // do something
-    },
-    cancelled: (appointment) => {
-        // do something
-    },
-    rescheduled: (appointment) => {
-        // do something
-    }
-};
+const appointmentList = [
+  {
+    status: "booked",
+    title: "Car wash",
+  },
+  {
+    status: "cancelled",
+    title: "Tire repair",
+  },
+  {
+    status: "rescheduled",
+    title: "Bike painting",
+  },
+]
 
-const hasStatus = (status) => Boolean(status);
+const appointmentAction = {
+  booked: (appointment) => {
+    console.log(appointment.title, "booked")
+    // do something
+  },
+  cancelled: (appointment) => {
+    console.log(appointment.title, "cancelled")
+    // do something
+  },
+  rescheduled: (appointment) => {
+    console.log(appointment.title, "rescheduled")
+    // do something
+  },
+}
+
+const hasStatus = (status) => Boolean(status)
 
 const isStatus = (appointment, status) => {
-    const statusRegex = new RegExp(status, "i");
+  const statusRegex = new RegExp(status, "i")
 
-    return Boolean(appointment.status.match(statusRegex));
-};
+  return Boolean(appointment.status.match(statusRegex))
+}
+
+const handleError = (err) => {
+  // Handle error logic
+}
 
 const manageAppointments = (appointment) => {
-    // 1-> Guard
-    if (!hasStatus(appointment.status)) {
-        // 1.1 -> Error handling
-        console.error("Error manageAppointments: handle error");
-    }
+  // 1-> Guard
+  if (!hasStatus(appointment.status)) {
+    // 1.1 -> Error handling
+    handleError(appointment)
+  }
 
-    // 2-> Control Structure
-    if (isStatus(appointment, "booked")) {
-        appointmentAction.booked(appointment);
-        // do something
-    }
-    if (isStatus(appointment, "cancelled")) {
-        appointmentAction.cancelled(appointment);
-        // do something
-    }
-    if (isStatus(appointment, "rescheduled")) {
-        appointmentAction.rescheduled(appointment);
-        // do something
-    }
-};
+  const appointmentStatus = appointment.status
+
+  appointmentAction[appointmentStatus](appointment)
+}
+
+appointmentList.forEach(manageAppointments)
